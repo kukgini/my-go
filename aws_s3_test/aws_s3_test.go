@@ -1,0 +1,60 @@
+package main_test
+
+import (
+    . "github.com/onsi/ginkgo"
+    . "github.com/onsi/gomega"
+
+	"fmt"
+
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/jaytaylor/mockery-example/mocks"
+	"github.com/stretchr/testify/mock"
+)
+
+var _ = Describe("AwsS3API", func() {
+    var (
+        mockS3 *mocks.S3API
+    )
+
+    BeforeEach(func() {
+	    mockS3 = &mocks.S3API{}
+    })
+
+    Describe("S3 test", func() {
+        Context("in some context", func() {
+            It("should be like this....", func() {
+	            mockResultFn := func(input *s3.ListObjectsInput) *s3.ListObjectsOutput {
+		            output := &s3.ListObjectsOutput{}
+		            output.SetCommonPrefixes([]*s3.CommonPrefix{
+			            &s3.CommonPrefix{
+				            Prefix: aws.String("2017-01-01"),
+			            },
+		            })
+		            return output
+	            }
+
+	            // NB: .Return(...) must return the same signature as the method being mocked.
+	            //     In this case it's (*s3.ListObjectsOutput, error).
+	            mockS3.On("ListObjects", mock.MatchedBy(func(input *s3.ListObjectsInput) bool {
+		            return input.Delimiter != nil && *input.Delimiter == "/" && input.Prefix == nil
+	            })).Return(mockResultFn, nil)
+
+				listingInput := &s3.ListObjectsInput{
+					Bucket:    aws.String("foo"),
+					Delimiter: aws.String("/"),
+				}
+
+				listingOutput, err := mockS3.ListObjects(listingInput)
+				if err != nil {
+					panic(err)
+				}
+
+				for _, x := range listingOutput.CommonPrefixes {
+					fmt.Printf("common prefix: %+v\n", *x)
+                    Expect(*x).To(Equal("2017-01-02"))
+				}
+			})
+        })
+    })
+})
