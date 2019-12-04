@@ -33,7 +33,7 @@ type Builder interface {
 
 // ConcreteBuilder is a builder for building a Product
 type ConcreteBuilder struct {
-	built bool
+	Built bool
 }
 
 // NewConcreteBuilder returns a new Builder
@@ -43,12 +43,12 @@ func NewConcreteBuilder() ConcreteBuilder {
 
 // Build builds the product.
 func (b *ConcreteBuilder) Build() {
-	b.built = true
+	b.Built = true
 }
 
 // GetResult returns the Product which has been build turing the Build step.
 func (b *ConcreteBuilder) GetResult() Product {
-	return Product{b.built}
+	return Product{b.Built}
 }
 
 // Product describes the product to be build.

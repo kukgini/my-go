@@ -1,6 +1,8 @@
 package main_test
 
 import (
+	"testing"
+
     . "github.com/onsi/ginkgo"
     . "github.com/onsi/gomega"
 
@@ -11,6 +13,12 @@ import (
 	"github.com/jaytaylor/mockery-example/mocks"
 	"github.com/stretchr/testify/mock"
 )
+
+func TestGinkgo(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "AwsS3API Test function Suite")
+
+}
 
 var _ = Describe("AwsS3API", func() {
     var (
