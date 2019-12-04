@@ -21,44 +21,32 @@ var _ = Describe("Creational Pattern : Builder", func() {
 				builder := NewConcreteBuilder()
 				Expect(&builder).NotTo(BeNil())
 			})
-			It("should sets built to False", func(){
+			It("should set Built to False", func(){
 				builder := NewConcreteBuilder()
 				Expect(builder.Built).Should(BeFalse())
 			})
 		})
+		Context("after build", func() {
+			It("should set Build to True", func() {
+				builder := NewConcreteBuilder()
+				builder.Build()
+				Expect(builder.Built).Should(BeTrue())
+			})
+		})
+		Context("before Build() called", func() {
+			It("should returns un-built product", func() {
+				builder := NewConcreteBuilder()
+				product := builder.GetResult()
+				Expect(product.Built).Should(BeFalse())
+			})
+		})
+		Context("after Build() called", func() {
+			It("should returns built product", func() {
+				builder := NewConcreteBuilder()
+				builder.Build()
+				product := builder.GetResult()
+				Expect(product.Built).Should(BeTrue())
+			})
+		})
 	})
 })
-
-// func TestNewConcreteBuilder_ReturnsNonNil(t *testing.T) {
-// 	t.Parallel()
-// 	builder := NewConcreteBuilder()
-// 	assert.NotNil(t, builder)
-// }
-
-// func TestNewConcreteBuilder_SetsBuildToFalse(t *testing.T) {
-// 	t.Parallel()
-// 	builder := NewConcreteBuilder()
-// 	assert.False(t, builder.built)
-// }
-
-// func TestBuild_SetsBuildToTrue(t *testing.T) {
-// 	t.Parallel()
-// 	builder := NewConcreteBuilder()
-// 	builder.Build()
-// 	assert.True(t, builder.built)
-// }
-
-// func TestGetResult_WhenBuildNotCalled_ReturnsUnBuiltProduct(t *testing.T) {
-// 	t.Parallel()
-// 	builder := NewConcreteBuilder()
-// 	product := builder.GetResult()
-// 	assert.False(t, product.Built)
-// }
-
-// func TestGetResult_WhenBuildCalled_ReturnsBuiltProduct(t *testing.T) {
-// 	t.Parallel()
-// 	builder := NewConcreteBuilder()
-// 	builder.Build()
-// 	product := builder.GetResult()
-// 	assert.True(t, product.Built)
-// }
