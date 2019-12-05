@@ -1,7 +1,7 @@
 package main
 
 import (
-	b "github.com/kukgini/my-go/behavioral"
+	b "github.com/kukgini/my-go/patterns/behavioral"
 )
 
 func main() {

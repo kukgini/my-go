@@ -5,7 +5,7 @@ import (
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"	
-	. "github.com/kukgini/my-go/creational"
+	. "github.com/kukgini/my-go/patterns/creational"
 )
 
 func TestGinkgo(t *testing.T) {

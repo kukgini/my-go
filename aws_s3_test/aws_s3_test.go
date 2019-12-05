@@ -2,11 +2,8 @@ package main_test
 
 import (
 	"testing"
-
     . "github.com/onsi/ginkgo"
     . "github.com/onsi/gomega"
-
-	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
@@ -32,13 +29,14 @@ var _ = Describe("AwsS3API", func() {
     Describe("S3 test", func() {
         Context("in some context", func() {
             It("should be like this....", func() {
+				expected := []*s3.CommonPrefix{
+					&s3.CommonPrefix{
+						Prefix: aws.String("2017-01-01"),
+					},
+				}
 	            mockResultFn := func(input *s3.ListObjectsInput) *s3.ListObjectsOutput {
 		            output := &s3.ListObjectsOutput{}
-		            output.SetCommonPrefixes([]*s3.CommonPrefix{
-			            &s3.CommonPrefix{
-				            Prefix: aws.String("2017-01-01"),
-			            },
-		            })
+		            output.SetCommonPrefixes(expected)
 		            return output
 	            }
 
@@ -58,9 +56,8 @@ var _ = Describe("AwsS3API", func() {
 					panic(err)
 				}
 
-				for _, x := range listingOutput.CommonPrefixes {
-					fmt.Printf("common prefix: %+v\n", *x)
-                    Expect(*x).To(Equal("2017-01-02"))
+				for i, x := range listingOutput.CommonPrefixes {
+                    Expect(&x).To(Equal(&expected[i]))
 				}
 			})
         })

@@ -1,10 +1,10 @@
-package behavioral
+package behavioral_test
 
 import (
 	"testing"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	. "github.com/kukgini/my-go/behavioral"
+	. "github.com/kukgini/my-go/patterns/behavioral"
 )
 
 func TestGinkgo(t *testing.T) {
