@@ -1,4 +1,4 @@
-package creational
+package creational_test
 
 import (
 	"testing"
