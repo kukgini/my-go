@@ -1,5 +1,3 @@
-// github.com/bvwells/go-pattern
-
 package behavioral
 
 import (
