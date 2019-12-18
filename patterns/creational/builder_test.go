@@ -8,7 +8,7 @@ import (
 	. "github.com/kukgini/my-go/patterns/creational"
 )
 
-func TestGinkgo(t *testing.T) {
+func TestBuilderTest(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Creational Pattern Test Suites")
 
